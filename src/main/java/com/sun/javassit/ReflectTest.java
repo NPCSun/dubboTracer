@@ -1,10 +1,11 @@
-package com.sun.javassit;
+/*package com.sun.javassit;
 
 public class ReflectTest {
 
 	public static void main(String[] args) {
-		System.out.println("ObjectÊÇStringµÄ¸¸Àà:"+Object.class.isAssignableFrom(String.class));  
+		System.out.println("Objectï¿½ï¿½Stringï¿½Ä¸ï¿½ï¿½ï¿½:"+Object.class.isAssignableFrom(String.class));  
 
 	}
 
 }
+*/

@@ -4,31 +4,40 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd 
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd  
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd 
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
-
+	<context:component-scan base-package="com.sun.controller" />
+	
+	<bean class="com.sun.util.ApplicationContextHolder"/>
     <dubbo:application name="demo-provider" owner="sun" organization="huoq"/>
 
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
 
     <dubbo:protocol name="dubbo" dispatcher="connection" iothreads="5" accesslog="false" serialization="hessian2" port="20800" threadpool="fixed" threads="2" />
-    
-    <bean id="aService" class="com.sun.dubbo.service.AServiceImpl"></bean>
-    <dubbo:service interface="com.sun.dubbo.service.AService" ref="aService" connections="50" actives="5000" cluster="failover"/>
- 	<dubbo:reference id="aServiceDubbo" interface="com.sun.dubbo.service.AService"/>
+    <bean id="aService" class="com.sun.service.AServiceImpl"/>
+    <dubbo:service interface="com.sun.service.AService" ref="aService" connections="50" actives="5000" cluster="failover"/>
+ 	<dubbo:reference id="aServiceDubbo" interface="com.sun.service.AService"/>
  	
- 	<bean id="bService" class="com.sun.dubbo.service.BServiceImpl"></bean>
-    <dubbo:service interface="com.sun.dubbo.service.BService" ref="bService" connections="50" actives="5000" cluster="failover"/>
- 	<dubbo:reference id="bServiceDubbo" interface="com.sun.dubbo.service.BService"/>
+ 	<bean id="bService" class="com.sun.service.BServiceImpl"/>
+    <dubbo:service interface="com.sun.service.BService" ref="bService" connections="50" actives="5000" cluster="failover"/>
+ 	<dubbo:reference id="bServiceDubbo" interface="com.sun.service.BService"/>
  	
- 	<bean id="cService" class="com.sun.dubbo.service.CServiceImpl"></bean>
-    <dubbo:service interface="com.sun.dubbo.service.CService" ref="cService" connections="50" actives="5000" cluster="failover"/>
- 	<dubbo:reference id="cServiceDubbo" interface="com.sun.dubbo.service.CService"/>
+ 	<bean id="cService" class="com.sun.service.CServiceImpl"/>
+    <dubbo:service interface="com.sun.service.CService" ref="cService" connections="50" actives="5000" cluster="failover"/>
+ 	<dubbo:reference id="cServiceDubbo" interface="com.sun.service.CService"/>
  	
  	<bean id="traceFilter" class="com.sun.dubbo.filter.TraceFilter" />
 	<aop:config>
-		<aop:pointcut id="tracePoint" expression="execution(* com.sun.dubbo.service.*.sayHi(..))" />
+		<aop:pointcut id="tracePoint" expression="execution(* com.sun.service..*.*(..))" />
 		<aop:advisor pointcut-ref="tracePoint" advice-ref="traceFilter" />
+	</aop:config>
+	<bean id="traceControllerFilter" class="com.sun.controller.filter.ControllerFilter" />
+	<aop:config>
+		<aop:pointcut id="controllerPoint" expression="execution(* com.sun.controller..*.*(..))" />
+		<aop:advisor pointcut-ref="controllerPoint" advice-ref="traceControllerFilter" />
 	</aop:config>
 </beans>

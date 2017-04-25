@@ -1,4 +1,4 @@
-package com.sun.javassit;
+/*package com.sun.javassit;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ public class JavassitTest {
 			ctMethod.addLocalVariable("begin", CtClass.longType);
 			
 			ctMethod.insertBefore(" begin = System.currentTimeMillis(); Thread.sleep(500l); ");
-			ctMethod.insertAfter(" System.out.println(\" ·½·¨Ö´ÐÐºÄÊ±£º\" + (System.currentTimeMillis()-begin)); ");
+			ctMethod.insertAfter(" System.out.println(\" ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ðºï¿½Ê±ï¿½ï¿½\" + (System.currentTimeMillis()-begin)); ");
 			cc.writeFile();
 			java.security.ProtectionDomain domain = Thread.currentThread().getClass().getProtectionDomain();
 			//System.out.println(domain.getPermissions().toString());
@@ -44,3 +44,4 @@ public class JavassitTest {
 	}
 
 }
+*/
