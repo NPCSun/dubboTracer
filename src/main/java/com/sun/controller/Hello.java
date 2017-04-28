@@ -22,7 +22,7 @@ public class Hello {
     	as.sayHi("sun");
     	BService bs = (BService) ApplicationContextHolder.getBean("bServiceDubbo");
     	bs.sayHi("sun");
-        return "Hello, sun!";
+        return "";
     }
 
 }
